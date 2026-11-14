@@ -1,0 +1,3 @@
+# Document delivery
+
+Required: AGENTS.md, CLAUDE.md, PRODUCT.md, CONTEXT.md, DESIGN.md, SECURITY.md, docs/agents/foundation.json, docs/agents/skills-checklist.md, docs/AI-FOUNDATION-REPORT.md. Applicable: docs/ARCHITECTURE.md, docs/TESTING.md, docs/SECURITY-MODEL.md and four project skill packages and the existing host Impeccable. The owner requested removal of the project copy; deletion was blocked, so the remaining local directory is ignored and not part of the repository. Schema and native API contract are not applicable yet: no persistence or API implementation is present. ADRs apply when consequential decisions are made. No hooks, executable tools or dependencies are installed.
