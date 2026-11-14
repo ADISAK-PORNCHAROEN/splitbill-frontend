@@ -30,7 +30,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 | --- | --- |
 | Product behavior | PRODUCT.md and CONTEXT.md |
 | UI design | DESIGN.md and the existing host Impeccable skill; do not download its separate engine without an explicit user request |
-| Architecture and API | docs/ARCHITECTURE.md |
+| Architecture and API | docs/ARCHITECTURE.md; for API integration, mocks, errors or retry behavior also read docs/backend-api-contract.md |
 | Tests and behavior changes | docs/TESTING.md and `.agents/skills/test-engineering/SKILL.md` |
 | Every code change | `.agents/skills/security-review/SKILL.md` and docs/TESTING.md |
 | Security | SECURITY.md and docs/SECURITY-MODEL.md |

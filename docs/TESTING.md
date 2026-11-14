@@ -7,3 +7,5 @@
 - `npm run build` checks the production build.
 
 The current tests cover shared control markup and the scaffold home page, not the unimplemented API journeys. For behavior changes, use `.agents/skills/test-engineering/SKILL.md` and select meaningful tests for user/group access, split allocation, exact mismatch, money precision, API errors, balance signs and payer-only deletion. Backend concurrency and access guarantees require backend integration tests. Review every code diff with `.agents/skills/security-review/SKILL.md`.
+
+For API mocks and integration, read [the backend API contract](backend-api-contract.md). Distinguish agreed behavior from provisional mock shapes and verify against the real service when implemented; tests using mocks do not establish backend behavior.

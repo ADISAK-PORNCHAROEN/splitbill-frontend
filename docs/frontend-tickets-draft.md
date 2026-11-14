@@ -19,7 +19,7 @@ Source: [frontend specification](frontend-spec.md). This breakdown was approved 
 **What it delivers:** A member previews an equal split, records an expense and sees refreshed expenses and balances.
 
 - [ ] Default payer and participants as agreed; allow changing them and preserve displayed member order in the request.
-- [ ] Calculate without floating-point errors; `100.00` split three ways yields `33.34`, `33.33`, `33.33`; agree the `0.01` edge with backend.
+- [ ] Calculate without floating-point errors; `100.00` split three ways yields `33.34`, `33.33`, `33.33`; cover the agreed `0.01` zero-share edge.
 - [ ] Validate positive amount and precision, send decimal strings and an idempotency key, and distinguish mutation success from refresh failure.
 - [ ] Test the user-visible journey and error states against the contract; identify real API integration status.
 
@@ -30,7 +30,7 @@ Source: [frontend specification](frontend-spec.md). This breakdown was approved 
 **What it delivers:** A member enters selected participants' exact shares, sees the remaining or excess amount, and saves only a valid allocation.
 
 - [ ] Show Remaining/Over by and disable submission until valid shares sum to the total; retain each mode's input when switching.
-- [ ] Confirm positive exact shares with backend and document the assumption; submit only the active selected participants.
+- [ ] Follow the agreed positive exact-share rule and document the assumption; submit only the active selected participants.
 - [ ] Test under, over, matched and invalid-precision cases and successful refresh.
 
 ## 4. Delete an expense as its payer
