@@ -1,0 +1,8 @@
+
+/docs/history/agent-instructions/AGENTS.2026-11-14-063098f6cb31.md -text
+
+# Preserve bundled skill package bytes and inventory fingerprints
+/.agents/skills/graphify/** -text whitespace=cr-at-eol
+/.agents/skills/hook-management/** -text whitespace=cr-at-eol
+/.agents/skills/security-review/** -text whitespace=cr-at-eol
+/.agents/skills/test-engineering/** -text whitespace=cr-at-eol

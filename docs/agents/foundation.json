@@ -1,0 +1,163 @@
+{
+  "version": 1,
+  "documents": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "PRODUCT.md",
+    "CONTEXT.md",
+    "DESIGN.md",
+    "SECURITY.md",
+    "docs/ARCHITECTURE.md",
+    "docs/TESTING.md",
+    "docs/SECURITY-MODEL.md",
+    "docs/AI-FOUNDATION-REPORT.md",
+    "docs/agents/document-delivery.md",
+    "docs/agents/skills-checklist.md",
+    ".agents/skills/test-engineering/SKILL.md",
+    ".agents/skills/security-review/SKILL.md",
+    ".agents/skills/graphify/SKILL.md",
+    ".agents/skills/hook-management/SKILL.md",
+    ".agents/skills/test-engineering/references/testing-contract.md",
+    ".agents/skills/security-review/references/review-contract.md",
+    ".agents/skills/hook-management/references/hook-change-contract.md",
+    "docs/agents/skill-inventories.md"
+  ],
+  "instructions": {
+    "format": "foundation-v1",
+    "guide": "AGENTS.md",
+    "bridge": "CLAUDE.md",
+    "mode": "replaced",
+    "managedBlocks": [
+      "nextjs-agent-rules"
+    ],
+    "historyIndex": "docs/history/agent-instructions/INDEX.md",
+    "archives": [
+      {
+        "original": "AGENTS.md",
+        "archive": "docs/history/agent-instructions/AGENTS.2026-11-14-063098f6cb31.md",
+        "sha256": "063098f6cb31bb44c6f8fbea25b3876de7ee1e5f7d00a50dbab506f6415eb7f0"
+      }
+    ]
+  },
+  "requiredSkills": [
+    "test-engineering",
+    "security-review",
+    "graphify",
+    "hook-management"
+  ],
+  "skillPaths": [
+    ".agents/skills/test-engineering",
+    ".agents/skills/security-review",
+    ".agents/skills/graphify",
+    ".agents/skills/hook-management"
+  ],
+  "skillInventory": [
+    {
+      "name": "test-engineering",
+      "scope": "project",
+      "source": "Foundation bundled assets/project-skills/test-engineering",
+      "sourceRevision": "captured source snapshot sha256:48ab7a5135418971cc6e79b2bdc61e35008cde8c4fe7d1b99d7f5a57c0dd4bb5",
+      "sourceFileCount": 2,
+      "sourceInventorySha256": "48ab7a5135418971cc6e79b2bdc61e35008cde8c4fe7d1b99d7f5a57c0dd4bb5",
+      "path": ".agents/skills/test-engineering",
+      "invocationPolicy": "Behavior changes and test authoring",
+      "installed": true,
+      "installedFileCount": 2,
+      "installedInventorySha256": "48ab7a5135418971cc6e79b2bdc61e35008cde8c4fe7d1b99d7f5a57c0dd4bb5",
+      "missingFiles": [],
+      "changedFiles": [],
+      "addedFiles": [],
+      "approvedChanges": [],
+      "inventoryVerified": true,
+      "discoverable": "not verified in fresh host session"
+    },
+    {
+      "name": "security-review",
+      "scope": "project",
+      "source": "Foundation bundled assets/project-skills/security-review",
+      "sourceRevision": "captured source snapshot sha256:fd361917704ead6725794dea94fc08def2916ca5c8a561a9517192f7a4821d8a",
+      "sourceFileCount": 2,
+      "sourceInventorySha256": "fd361917704ead6725794dea94fc08def2916ca5c8a561a9517192f7a4821d8a",
+      "path": ".agents/skills/security-review",
+      "invocationPolicy": "Every code, dependency, executable configuration or CI diff",
+      "installed": true,
+      "installedFileCount": 2,
+      "installedInventorySha256": "fd361917704ead6725794dea94fc08def2916ca5c8a561a9517192f7a4821d8a",
+      "missingFiles": [],
+      "changedFiles": [],
+      "addedFiles": [],
+      "approvedChanges": [],
+      "inventoryVerified": true,
+      "discoverable": "not verified in fresh host session"
+    },
+    {
+      "name": "graphify",
+      "scope": "project",
+      "source": "Foundation bundled assets/project-skills/graphify",
+      "sourceRevision": "captured source snapshot sha256:aab00021382bf9fa662577f3db7605d38269edc8aa9f690d80a47176cd34ccd7",
+      "sourceFileCount": 12,
+      "sourceInventorySha256": "aab00021382bf9fa662577f3db7605d38269edc8aa9f690d80a47176cd34ccd7",
+      "path": ".agents/skills/graphify",
+      "invocationPolicy": "Relevant code/content discovery; CLI separate",
+      "installed": true,
+      "installedFileCount": 12,
+      "installedInventorySha256": "aab00021382bf9fa662577f3db7605d38269edc8aa9f690d80a47176cd34ccd7",
+      "missingFiles": [],
+      "changedFiles": [],
+      "addedFiles": [],
+      "approvedChanges": [],
+      "inventoryVerified": true,
+      "discoverable": "not verified in fresh host session"
+    },
+    {
+      "name": "hook-management",
+      "scope": "project",
+      "source": "Foundation bundled assets/project-skills/hook-management",
+      "sourceRevision": "captured source snapshot sha256:01e66efa463c5fff70ccf3b1eee3cfc741b693de6de574d9c2dc2f91a18fd10b",
+      "sourceFileCount": 2,
+      "sourceInventorySha256": "01e66efa463c5fff70ccf3b1eee3cfc741b693de6de574d9c2dc2f91a18fd10b",
+      "path": ".agents/skills/hook-management",
+      "invocationPolicy": "Explicit hook requests only",
+      "installed": true,
+      "installedFileCount": 2,
+      "installedInventorySha256": "01e66efa463c5fff70ccf3b1eee3cfc741b693de6de574d9c2dc2f91a18fd10b",
+      "missingFiles": [],
+      "changedFiles": [],
+      "addedFiles": [],
+      "approvedChanges": [],
+      "inventoryVerified": true,
+      "discoverable": "not verified in fresh host session"
+    },
+    {
+      "name": "impeccable",
+      "scope": "host",
+      "source": "existing host installation v4.9.1",
+      "sourceRevision": "prior host snapshot sha256:38456c4cee57b8e76f2f314174a58ee3e2f509ff4cfdab81ad558df4652c7e43",
+      "sourceFileCount": 67,
+      "sourceInventorySha256": "38456c4cee57b8e76f2f314174a58ee3e2f509ff4cfdab81ad558df4652c7e43",
+      "path": "host skill catalog: impeccable",
+      "invocationPolicy": "UI design work; preserve host policy, no unrequested engine download",
+      "installed": true,
+      "installedFileCount": 67,
+      "installedInventorySha256": "38456c4cee57b8e76f2f314174a58ee3e2f509ff4cfdab81ad558df4652c7e43",
+      "missingFiles": [],
+      "changedFiles": [],
+      "addedFiles": [],
+      "approvedChanges": [],
+      "inventoryVerified": true,
+      "discoverable": "listed in prior host catalog; no project-local route"
+    }
+  ],
+  "skillChecklist": "docs/agents/skills-checklist.md",
+  "preservation": {
+    "priorProjectSkillDirectories": [
+      "graphify",
+      "hook-management",
+      "security-review",
+      "test-engineering"
+    ],
+    "existingHostImpeccable": "v4.9.1, host catalog",
+    "hostImpeccableBeforeSha256": "38456c4cee57b8e76f2f314174a58ee3e2f509ff4cfdab81ad558df4652c7e43",
+    "hostImpeccableAfterSha256": "38456c4cee57b8e76f2f314174a58ee3e2f509ff4cfdab81ad558df4652c7e43"
+  }
+}

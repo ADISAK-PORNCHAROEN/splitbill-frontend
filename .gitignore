@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Generated Graphify knowledge graphs and cache
+graphify-out/
+
+# Local copy excluded at owner request; use the existing host skill
+/.agents/skills/impeccable/
