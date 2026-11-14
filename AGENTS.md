@@ -39,4 +39,4 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
 ## Completion
 
-Report actual verification, limitations and unresolved failures. `npm run lint` and `npm run build` exist; choose checks appropriate to the change and do not claim unrun checks passed. No test runner is configured.
+Report actual verification, limitations and unresolved failures. `npm run lint` and `npm run build` exist; choose checks appropriate to the change and do not claim unrun checks passed. Vitest and Playwright commands are documented in `docs/TESTING.md`.

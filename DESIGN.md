@@ -22,8 +22,8 @@ White bordered card with shadow-sm and rounded-3xl; status panel uses stone-100,
 
 ## Components and states
 
-Only scaffold text and a status panel exist. Fields, focus, loading, empty, error, success, disabled, validation and recovery states are not implemented or approved. Provide labels, keyboard support and accessible feedback when implemented.
+The home page still contains only scaffold text and a status panel. Shared Button, Input, Textarea and Select primitives are available under `src/components/ui/`; callers must supply accessible labels and feature-specific error messages. Full loading, empty, error, success and recovery states remain to be implemented in the feature flows.
 
 ## Agent usage and visual acceptance
 
-For UI design use the existing host Impeccable skill, preserving its policies; do not download its separate engine without request. Verify relevant viewports and states against actual rendered output after the existing JSX error is resolved. No visual verification was performed in this setup.
+For UI design use the existing host Impeccable skill, preserving its policies; do not download its separate engine without request. The scaffold was visually checked at desktop and mobile widths after the JSX fix. Verify all feature-specific viewports and states when those flows are implemented.
