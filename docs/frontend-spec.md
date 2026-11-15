@@ -1,6 +1,6 @@
 # SplitBill frontend specification
 
-Status: Approved and published as [GitHub issue #1](https://github.com/ADISAK-PORNCHAROEN/splitbill-frontend/issues/1). Source: Developer Take-Home Test PDF, especially pages 2–4, and the owner's grill-with-docs decisions through Q21. This is a frontend specification; backend behavior is a dependency unless identified as frontend behavior. The current app is a scaffold; nothing below implies a feature is implemented or verified.
+Status: Approved and published as [GitHub issue #1](https://github.com/ADISAK-PORNCHAROEN/splitbill-frontend/issues/1). Source: Developer Take-Home Test PDF, especially pages 2–4, and the owner's grill-with-docs decisions through Q21. This document remains the normative frontend specification; implementation and verification status is recorded separately in README.md and the backend API contract.
 
 ## Problem Statement
 
@@ -54,12 +54,12 @@ Provide one usable, responsive English-language page with a warm, friendly visua
 
 ## Implementation Decisions
 
-- Use a single Next.js page with TypeScript and Tailwind. Preserve all required behavior while applying a warm and friendly design.
+- Use a single Next.js page with TypeScript and Tailwind for the page shell and responsive layout; retain the selected component-specific design details in `src/app/splitbill.css`. Preserve all required behavior while applying a warm and friendly design.
 - The backend is authoritative for membership, authorization, amount validation, allocation, balances, idempotency and soft deletion. Frontend checks improve feedback but do not enforce access.
-- Coordinate the actual API URL, paths, response/error shapes and deletion behavior with the backend. The brief specifies group, expense and balance endpoints and the `X-User` and `Idempotency-Key` headers; the actual integration contract is not yet established.
+- Follow [the backend API contract](backend-api-contract.md) for agreed paths, headers, responses and deletion behavior. The current backend handoff confirms response shapes, error codes and local CORS defaults. Configure the API origin and verify the running backend before claiming integration.
 - Represent money without floating-point arithmetic. Send decimal strings and document the chosen approach. Reject an expense amount of zero or less or more than two decimal places.
-- Equal-split preview uses the same participant order sent to the API and assigns one remaining satang at a time from the start. A positive expense can yield zero shares when there are more participants than satang; backend alignment remains open.
-- Owner proposal: selected participants in an exact split have positive shares. This is an assumption, not an explicit PDF requirement; agree it with the backend and document it. Include only selected members in the active split.
+- Equal-split preview uses the same participant order sent to the API and assigns one remaining satang at a time from the start. A positive expense can yield zero shares when there are more participants than satang; the backend handoff agrees.
+- The agreed backend target requires positive shares for selected participants in an exact split. This is a project assumption, not an explicit PDF requirement; document it. Include only selected members in the active split.
 - Default payer to the current user and select all group members. Preserve each mode's inputs while switching; submit only the active mode. Clear the form after confirmed user/group switching and warn before discarding unsaved input.
 - Disable user/group switching during mutation requests. Ignore responses that no longer belong to the active selection. Show distinct loading, empty and error states.
 - Retry an identical request after an uncertain failure with its original idempotency key. An edited request uses a new key and may duplicate a previously successful unknown outcome; offer refresh and explain the uncertainty.
@@ -68,8 +68,8 @@ Provide one usable, responsive English-language page with a warm, friendly visua
 
 ## Testing Decisions
 
-- Prefer user-observable behavior over internal implementation details. Proposed primary seam: render the page in a browser against a controllable API boundary, then perform the critical journey against the real backend when available. This seam requires owner confirmation.
-- Verify exact money and allocation boundaries through the smallest useful behavior-level tests, plus representative end-to-end journeys. There is no existing test runner or relevant test prior art in the current frontend scaffold.
+- Prefer user-observable behavior over internal implementation details. The owner approved the primary seam: render the page in a browser against a controllable API boundary, then perform the critical journey against the real backend when available.
+- Verify exact money and allocation boundaries through behavior-level unit tests and end-to-end journeys. Vitest and Playwright cover the agreed mock and real-local-API seams; see [docs/TESTING.md](TESTING.md).
 - Cover `100.00` across three members, `0.01` across three, exact under/over allocation, invalid `10.005`, zero/negative expense amounts, selection order and `0.1 + 0.2 = 0.30` without floating-point money errors.
 - Cover identity/group changes, stale responses, loading/empty/error states, authorization errors, delete visibility and confirmation, success followed by refresh failure, unknown submission outcomes and identical retry keys.
 - Validate the completed journey with the real API. Backend tests separately prove zero-sum balances, group access, payer-only soft deletion and concurrent idempotency; frontend mocks alone cannot prove these guarantees.
@@ -80,4 +80,4 @@ Full authentication, expense editing, settlement suggestions and repayments. Bac
 
 ## Further Notes
 
-The frontend repo is currently a scaffold; the earlier extra closing main tag has been fixed, but the page still has no API integration. The backend repository was observed to expose only a health endpoint; do not infer the remaining API contract from it. The take-home brief additionally requires reproducible README instructions, assumptions and design decisions, AI_NOTES, placeholder environment configuration, incremental commits and no secrets. The release-wide submission layout and backend tests must be checked separately. The owner approved the proposed testing seam and ticket breakdown.
+The implementation and backend handoff are tracked in this repository; the contract records which API behaviors were exercised locally and which guarantees are established by backend tests. The take-home brief additionally requires reproducible README instructions, assumptions and design decisions, AI_NOTES, placeholder environment configuration, incremental commits and no secrets. The release-wide submission layout remains outside this frontend implementation. The owner approved the proposed testing seam and ticket breakdown.

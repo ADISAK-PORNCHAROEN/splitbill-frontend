@@ -1,8 +1,9 @@
 import { expect, test } from "@playwright/test";
 
-test("the scaffold renders its status on the home page", async ({ page }) => {
+test("the page remains usable when the API is unavailable", async ({ page }) => {
+  await page.route("**/groups", (route) => route.abort("failed"));
   await page.goto("/");
-  await expect(page.getByRole("heading", { name: "Shared expenses, made clear." })).toBeVisible();
-  await expect(page.getByText("This starter does not yet connect to the API or store expenses."))
-    .toBeVisible();
+  await expect(page.getByLabel("Select user")).toBeVisible();
+  await expect(page.getByRole("alert").filter({ hasText: "Unable to connect" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Try again" })).toBeVisible();
 });

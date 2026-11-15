@@ -1,12 +1,12 @@
 # SplitBill frontend tickets — approved breakdown
 
-Source: [frontend specification](frontend-spec.md). This breakdown was approved for publication as GitHub issues. Each slice includes its relevant frontend behavior, API interaction or controllable contract fixture, and behavior tests. Real integration depends on backend endpoints becoming available; fixture results do not establish backend correctness. Dependencies below were approved.
+Source: [frontend specification](frontend-spec.md). This breakdown was approved for publication as GitHub issues. The backend endpoints and agreed contract are now available; the opt-in real-API journey is recorded in [the contract verification](backend-api-contract.md). Contract fixtures remain for controlled frontend tests and do not establish backend correctness. The GitHub issues are the status source; dependencies below record the approved implementation order.
 
 ## 1. Select a user and view their group's balances
 
-**Blocked by:** None; agree a minimal read API contract with the backend as part of this slice.
+**Blocked by:** None. The read API contract is agreed and implemented by the backend.
 
-**What it delivers:** A user can select an identity and an accessible group and see its members, expenses and balance signs, using the real read API when available or a clearly identified contract fixture while it is in progress.
+**What it delivers:** A user can select an identity and an accessible group and see its members, expenses and balance signs from the backend read API; controlled contract fixtures cover isolated frontend tests.
 
 - [ ] Send the selected identity, show only returned groups and show members, newest-first expenses and clearly distinguished balances for the chosen group.
 - [ ] Cover loading, empty and plain-language error states, user/group changes and stale responses.
@@ -19,7 +19,7 @@ Source: [frontend specification](frontend-spec.md). This breakdown was approved 
 **What it delivers:** A member previews an equal split, records an expense and sees refreshed expenses and balances.
 
 - [ ] Default payer and participants as agreed; allow changing them and preserve displayed member order in the request.
-- [ ] Calculate without floating-point errors; `100.00` split three ways yields `33.34`, `33.33`, `33.33`; agree the `0.01` edge with backend.
+- [ ] Calculate without floating-point errors; `100.00` split three ways yields `33.34`, `33.33`, `33.33`; cover the agreed `0.01` zero-share edge.
 - [ ] Validate positive amount and precision, send decimal strings and an idempotency key, and distinguish mutation success from refresh failure.
 - [ ] Test the user-visible journey and error states against the contract; identify real API integration status.
 
@@ -30,7 +30,7 @@ Source: [frontend specification](frontend-spec.md). This breakdown was approved 
 **What it delivers:** A member enters selected participants' exact shares, sees the remaining or excess amount, and saves only a valid allocation.
 
 - [ ] Show Remaining/Over by and disable submission until valid shares sum to the total; retain each mode's input when switching.
-- [ ] Confirm positive exact shares with backend and document the assumption; submit only the active selected participants.
+- [ ] Follow the agreed positive exact-share rule and document the assumption; submit only the active selected participants.
 - [ ] Test under, over, matched and invalid-precision cases and successful refresh.
 
 ## 4. Delete an expense as its payer
@@ -54,7 +54,7 @@ Source: [frontend specification](frontend-spec.md). This breakdown was approved 
 
 ## 6. Verify the complete journey with the real API
 
-**Blocked by:** 3, 4, 5 and availability of the corresponding backend endpoints and contracts.
+**Blocked by:** 3, 4 and 5. The corresponding backend endpoints and contract are available.
 
 **What it delivers:** A reviewer can run the complete frontend journey against the actual backend and reproduce the documented results.
 

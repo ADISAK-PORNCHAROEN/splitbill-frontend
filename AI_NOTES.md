@@ -1,13 +1,36 @@
 # AI notes
 
-AI assistance was used to scaffold this Next.js frontend from the supplied take-home brief. The current page is a placeholder and does not implement the required group, expense, split, or balance flows. The initial scaffold had no automated tests.
+Codex assisted with the project foundation, requirements documentation, selected visual prototype, implementation and verification. The approved source documents remain the user's brief, `docs/frontend-spec.md`, `PRODUCT.md`, `DESIGN.md` and `docs/backend-api-contract.md`.
 
-The frontend dependency audit reported seven moderate advisories in the transitive TypeScript ESLint development-tool chain and no high or critical advisories. `npm audit fix` did not resolve them; no forced upgrade was applied.
+## Implementation decisions
 
-## Review process for workflow and planning changes
+- Group and expense data is scoped to selected user/group keys in TanStack Query. The API boundary validates responses and keeps identity, HTTP details and backend error codes out of the visual components.
+- Monetary state uses integer satang and `BigInt`; request amounts and shares are decimal strings. Equal remainder follows displayed participant order. Positive selected shares in exact mode follow the agreed backend contract and are documented as a project rule.
+- Unknown create outcomes retain the original payload and idempotency key. The UI warns before sending an edited draft with a new key. A retry-success regression test preserves edits made to the visible form.
+- Payer-only deletion is a convenience boundary in the UI; backend authorization remains authoritative.
+- `src/app/prototype/` and its design references are preserved as an illustrative, disconnected design artifact. It is not presented as production data.
 
-Codex assisted with the project workflow, specification and GitHub issue planning. Before each commit, review the staged diff for unintended changes, secrets and accuracy against the brief; check changed links and run checks appropriate to the staged content. Source review found an extra closing `main` tag in the AI-assisted scaffold; it was removed when establishing the frontend structure, and the page was checked with a build and browser smoke test. Do not claim tests passed without running them.
+## Verification and review trail
 
-## Frontend structure
+The mock-backed browser suite and unit suite verify frontend behavior; they do not prove backend persistence, authorization or concurrent idempotency. An explicitly enabled local integration browser test uses seeded group 1 against a dedicated disposable backend database and removes only the records returned by its own create operations. Exact commands, coverage and limitations are recorded in `docs/TESTING.md` and `docs/backend-api-contract.md`.
 
-Codex helped establish shared controls, a TanStack Query provider, source folders, and Vitest/Playwright setup. The feature flows remain unimplemented. Review the staged diff, package audit, relevant tests and build before committing AI-assisted code.
+For every implementation commit, review the staged diff against the brief and API contract, check for accidental design/prototype changes and secrets, and run the applicable checks. Record each commit and its actual review/check outcome here before pushing. Do not infer success from a mock run when reporting real API behavior.
+
+## Review log
+
+- `feat(money): add exact satang allocation`: reviewed the staged domain parser, formatter, allocator and boundary tests against positive range, precision, ordered remainder and exact-share rules; `npm test` passed 16 tests and `npx tsc --noEmit` passed.
+- `feat: implement connected SplitBill workspace`: reviewed the API boundary, query/mutation state, forms, design references and retained prototype for contract alignment and scope; lint and TypeScript passed, all 16 unit tests and 12 mock browser scenarios passed, and desktop/mobile behavior was inspected against the owner-selected reference.
+- `test: verify the real SplitBill journey`: reviewed the opt-in integration harness for loopback-only API access, isolated test-data cleanup and contract assertions; 12 mock browser scenarios, one production-build real-API journey and 37 backend tests passed, with one upstream deprecation warning. README, setup and ticket guidance were checked against the actual run.
+- `test: stabilize the mocked group retry`: a final production-build browser rerun exposed that the fixture assumed two initial requests, which differs from Next development mode. It now holds the mocked outage until the retry action; production-build Playwright passed all 12 mock scenarios, Vitest passed 16 tests, and lint and TypeScript passed.
+- `fix: align responsive layout and submission docs`: applied independent review findings by using Tailwind for responsive structure and correcting stale project guidance. The production build, lint, TypeScript, 16 Vitest tests, 12 mock browser tests and one real-API browser journey passed; the submitter's time estimate remains pending.
+
+## Prompt examples
+
+1. The owner asked to implement every open frontend issue against the approved PDF requirements while preserving the selected design and existing working-tree changes. That prompt named the source of truth, scope and preservation constraints.
+2. The owner required a real-backend journey when the endpoints were ready, separate reporting for mock and backend evidence, and no issue closure before its acceptance criteria passed. That prompt made backend claims and issue status depend on observable results.
+
+## Incorrect AI output and correction
+
+An early mock browser fixture assumed Next.js would send two group-list requests before showing an API error. The production-build browser run made only one request before the user's retry, so the fixture returned the same error again and the test failed. The test exposed the mistaken assumption. The fixture now holds the outage until the test explicitly permits the user retry, and the production-build browser suite passes.
+
+An independent review also found the implementation guide still called the page a scaffold and required Tailwind. The responsive app shell and grid now use Tailwind utilities, and the guide reflects the connected page. Design-specific component rules stay in the scoped stylesheet.

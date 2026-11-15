@@ -1,6 +1,6 @@
 # SplitBill frontend
 
-Status: brief supplied; implementation incomplete. Evidence: Developer-Take-Home-Test.pdf pages 1–4 (user-provided brief), README.md, src/app/page.tsx; reviewed 2026-11-14.
+Status: feature implementation and local verification are complete on `develop`; GitHub completion is pending the reviewed pull request merge. The PDF time-spent field still needs the owner's estimate before issue #7 and umbrella issue #1 are complete. Current evidence is in README.md, AI_NOTES.md and docs/backend-api-contract.md. Source requirements are Developer-Take-Home-Test.pdf pages 1–4 (user-provided brief) and the owner's grill-with-docs decisions.
 
 ## Purpose and users
 
@@ -19,7 +19,7 @@ Exact shares sum to the total to the satang; distribute equal-split remainder on
 
 ## Status and decisions
 
-The page is a scaffold, with no API or journeys implemented. API URL, exact error payload and UX details are not established here; agree with backend/owner before integration. The brief requires documenting assumptions and the backend choice of 403 or 404 for unauthorized group access, with rationale, in README, and AI use in AI_NOTES.md. No deadline date is inferable without the brief receipt date. See docs/ARCHITECTURE.md and docs/TESTING.md.
+The page implements the specified user/group, expense, split, balance and payer-delete journeys. Verification status is tracked in [the backend API contract](docs/backend-api-contract.md) and [testing guide](docs/TESTING.md); mock checks and real-backend checks are reported separately. The brief requires documenting assumptions and the backend choice of 403 or 404 for unauthorized group access, with rationale, in README, and AI use in AI_NOTES.md. No deadline date is inferable without the brief receipt date. See docs/ARCHITECTURE.md.
 
 ## Frontend decisions confirmed by owner
 
@@ -39,11 +39,13 @@ The page is a scaffold, with no API or journeys implemented. API URL, exact erro
 - When a submission outcome is unknown after a network failure, explain uncertainty, offer retry of the identical request with its original key, and offer refreshing expenses to inspect before editing and sending a new request.
 - In exact mode show Remaining when under-allocated and Over by when over-allocated; prevent submission until shares match.
 - Ignore stale responses after changing the selected user or group; display only the current selection’s data.
-- Show amount validation next to the input and disable submission for zero, negative, or more than two decimal places; never round an invalid input silently. Whether a zero exact share is allowed remains an API contract question.
+- Show amount validation next to the input and disable submission for zero, negative, or more than two decimal places; never round an invalid input silently. Selected exact shares must be positive under the agreed backend target.
 
-- Both split modes allow selecting participants; exact mode displays and submits shares only for selected members. Whether selected members may have a zero share requires agreement with the backend.
+- Both split modes allow selecting participants; exact mode displays and submits shares only for selected members. Selected exact shares must be positive under the agreed backend target.
 - After a successful create or delete, reload expenses and balances. Distinguish mutation success from a later refresh failure, and offer refresh retry.
 - Accept ungrouped decimal entry such as `1000.50`; format displayed amounts with grouping such as `1,000.50`.
 
-- Owner proposes requiring positive shares for selected participants in exact mode; this is an assumption to agree with the backend and document in README. The owner accepts zero shares resulting from equal allocation when the amount in satang is less than the participant count; confirm matching handling with the backend.
+- The owner and backend handoff agree on positive shares for selected participants in exact mode; document this project assumption in README. Equal allocation allows zero shares when there are fewer satang than participants.
 - Disable user/group switching while a mutation request is in flight; restore controls on failure and communicate uncertain outcomes.
+
+- The owner selected the revised Clear Together visual direction on 2026-11-15; see DESIGN.md for desktop and mobile reference images. The prototype uses illustrative data and is not the implemented product.
