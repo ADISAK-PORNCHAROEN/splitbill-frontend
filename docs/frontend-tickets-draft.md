@@ -1,12 +1,12 @@
 # SplitBill frontend tickets — approved breakdown
 
-Source: [frontend specification](frontend-spec.md). This breakdown was approved for publication as GitHub issues. Each slice includes its relevant frontend behavior, API interaction or controllable contract fixture, and behavior tests. Real integration depends on backend endpoints becoming available; fixture results do not establish backend correctness. Dependencies below were approved.
+Source: [frontend specification](frontend-spec.md). This breakdown was approved for publication as GitHub issues. The backend endpoints and agreed contract are now available; the opt-in real-API journey is recorded in [the contract verification](backend-api-contract.md). Contract fixtures remain for controlled frontend tests and do not establish backend correctness. The GitHub issues are the status source; dependencies below record the approved implementation order.
 
 ## 1. Select a user and view their group's balances
 
-**Blocked by:** None; agree a minimal read API contract with the backend as part of this slice.
+**Blocked by:** None. The read API contract is agreed and implemented by the backend.
 
-**What it delivers:** A user can select an identity and an accessible group and see its members, expenses and balance signs, using the real read API when available or a clearly identified contract fixture while it is in progress.
+**What it delivers:** A user can select an identity and an accessible group and see its members, expenses and balance signs from the backend read API; controlled contract fixtures cover isolated frontend tests.
 
 - [ ] Send the selected identity, show only returned groups and show members, newest-first expenses and clearly distinguished balances for the chosen group.
 - [ ] Cover loading, empty and plain-language error states, user/group changes and stale responses.
@@ -54,7 +54,7 @@ Source: [frontend specification](frontend-spec.md). This breakdown was approved 
 
 ## 6. Verify the complete journey with the real API
 
-**Blocked by:** 3, 4, 5 and availability of the corresponding backend endpoints and contracts.
+**Blocked by:** 3, 4 and 5. The corresponding backend endpoints and contract are available.
 
 **What it delivers:** A reviewer can run the complete frontend journey against the actual backend and reproduce the documented results.
 

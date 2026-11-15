@@ -1,8 +1,8 @@
 # Backend API contract for the frontend
 
-Status: **agreed target, not implemented or verified**. The backend currently exposes only the health endpoint. Use this contract to design the client and controlled mocks; passing against a mock is not evidence of integration with the real backend.
+Status: **implemented by backend; frontend integration verified locally on 2026-11-15**. The verification used a production Next.js build, the API at `127.0.0.1:8000` and a dedicated seeded PostgreSQL test database. Mocks alone do not establish integration with the real backend.
 
-Source: backend `docs/FRONTEND-API-HANDOFF.md` provided on 2026-11-14 (SHA-256 `dc0692c6e9f09e0f88c7b7243d6575764151a35592a53ea464b1bcbca5994162`); backend `docs/BACKEND-SPEC.md` at `e6b3673dc66f7c657145c4f59a4384ebef77c8df`. The handoff was untracked in the backend working tree when read. Confirm the current backend contract and actual behavior before integration; update this record when the owners agree on changes.
+Source: backend `docs/FRONTEND-API-HANDOFF.md` at commit `8e4763a93ea31e4c10aacac95585750e3ca8ec0f` (SHA-256 `a6ba4c3fb8c2eb62c716e17e5864b862dfd67798a93b583c56a973817eb6fb23`), read on 2026-11-15. Confirm the current backend contract and actual behavior before integration; update this record when the owners agree on changes.
 
 ## Endpoints and identity
 
@@ -17,7 +17,7 @@ Group endpoints use the following paths without an `/api` or `/api/v1` prefix. T
 | DELETE | `/groups/{group_id}/expenses/{expense_id}` | Soft-delete an expense; payer only. |
 | GET | `/groups/{group_id}/balances` | Get every member's net balance, including zero. |
 
-Send `X-User` with every request. Missing, empty or unknown identities result in `400`. This header is a brief-specified identifier, not authentication. Send a nonempty `Idempotency-Key` for each create request. Configure the API origin separately; its deployment value and CORS configuration are not established.
+Send `X-User` with every request. Missing, empty or unknown identities result in `400`. This header is a brief-specified identifier, not authentication. Send a nonempty `Idempotency-Key` for each create request. Configure the API origin separately. The backend defaults to allowing browser origins `http://localhost:3000` and `http://127.0.0.1:3000`; set its `CORS_ORIGINS` for other origins. The deployment origin is not established.
 
 Seeded users: `alice`, `bob`, `carol`, `dan`. Group 1, Chiang Mai trip: alice, bob, carol. Group 2, Office lunch: bob, dan.
 
@@ -50,14 +50,18 @@ A positive balance means money is owed to that member; negative means they owe m
 
 Agreed success responses are JSON objects or arrays directly, without a `data` wrapper, except `204` deletion which has no body. All monetary fields are strings. Expense responses contain `id`, `group_id`, `description`, `paid_by`, `amount`, `shares` and `created_at`.
 
-The precise shape of `shares` and fields for groups, members and balances shown in the handoff are **proposals for mocks**, not final schemas. Keep them isolated at the API boundary; confirm before treating them as a stable contract. Likewise, the agreed error envelope is:
+The current backend handoff confirms these shapes: groups are `{id, name}`, group detail adds `members` as usernames, balances contain `{member, balance}`, and expense `shares` maps usernames to decimal strings. Keep these details isolated at the API boundary. The error envelope is:
 
 ```json
 {"error":{"code":"…", "message":"…"}}
 ```
 
-Specific error codes and messages, including `INVALID_SPLIT`, are **proposed mock examples**, not a confirmed enumeration. Handle unknown codes and malformed or unavailable error responses without relying on a proposed code as exhaustive. Present errors in plain language. Never treat a frontend permission check as the authorization boundary.
+The current backend uses `bad_request`, `not_found`, `forbidden`, `http_error`, and `internal_error`. Handle unknown codes and malformed or unavailable error responses without assuming this list is exhaustive. Present errors in plain language. Never treat a frontend permission check as the authorization boundary.
 
 ## Integration verification
 
-Test the agreed request, allocation and retry behavior with controlled API responses. When the backend endpoints are available, verify the same journeys against the real API, including `201`/`200`, `204`, `400`/`403`/`404`, plain-language errors and refreshed lists and balances. Test delayed responses when the selected identity or group changes. Record backend evidence separately for group access, zero-sum balances, payer-only soft deletion and concurrent idempotency. Real schema, CORS, API origin and error-code confirmation remain open until observed and agreed.
+The mock-backed browser suite verified UI states, delayed/stale selection behavior, validation, allocation previews, payer-only visibility, confirmation, same-key/same-payload retry, preserved edits, and refresh failures. `npm run test:e2e` passed 12 mock-backed scenarios; it skips the opt-in real-API spec by default.
+
+The opt-in browser test ran against the production frontend and a real backend at `127.0.0.1:8000`, using a dedicated local PostgreSQL database and CORS permission for `127.0.0.1:3100`. It passed one full journey covering Alice's accessible group, member and balance display, equal allocation and `201`, same-key replay and `200`, exact shares for selected members and `201`, newest-first list refresh, Bob's hidden delete control and `403`, inaccessible group `404`, invalid precision `400`, payer deletion `204`, refreshed expenses and balances, and zero-sum balances. It removed only the two IDs it created. Backend `uv run --locked pytest` passed 37 tests, including the backend's group authorization, balance, payer-only soft deletion and concurrent idempotency coverage; one upstream Starlette/httpx deprecation warning was reported.
+
+The frontend unit suite passed 16 tests, lint, TypeScript check, production build and 12 mock browser scenarios. The real browser test passed separately with `PLAYWRIGHT_BASE_URL=http://127.0.0.1:3100` and `SPLITBILL_REAL_API=1`. These results establish local integration only. The deployment API origin and any future contract changes still need confirmation before deployment.
