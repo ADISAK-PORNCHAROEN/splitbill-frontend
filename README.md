@@ -44,6 +44,6 @@ Detailed test scope and setup notes live in [docs/TESTING.md](docs/TESTING.md). 
 
 ## Take-home submission notes
 
-- Approximate time spent: owner estimate pending. The repository and automated run logs do not measure the submitter's active work time.
+- Approximate time spent: about 26 hours elapsed from the first recorded implementation work (19:23 ICT on Saturday, 14 November 2026) through completion of the frontend issue criteria on Sunday, 15 November 2026. This is calendar time, not tracked active work hours, so it may include idle time.
 - Known limitations: the identity selector demonstrates the take-home `X-User` contract and is not authentication; the API origin must be configured for each environment; deployment was not tested.
-- Before submission, the owner should record the time estimate. For a deployed app, configure a real API origin and authentication, then run the integration flow against its dedicated environment.
+- For a deployed app, configure a real API origin and authentication, then run the integration flow against its dedicated environment.
