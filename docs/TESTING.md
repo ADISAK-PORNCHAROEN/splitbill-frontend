@@ -2,6 +2,7 @@
 
 ## Standard checks
 
+- Before running the app, the production build or mock-backed browser tests, copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_API_BASE_URL` to an HTTP or HTTPS backend origin. The browser can read this value, and Next.js embeds it at build time. Mock-backed browser tests intercept API requests and do not require a running backend.
 - `npm test` runs Vitest under `tests/unit/`.
 - `npm run lint` runs the configured ESLint checks.
 - `npx tsc --noEmit` checks TypeScript separately.
@@ -30,8 +31,12 @@ npm run test:e2e -- tests/e2e/real-api.spec.ts
 
 The real test refuses non-loopback API hosts. Still point it only at a dedicated, disposable local database: it creates records and deletes only IDs returned by its own create calls. Never direct it at shared, staging or production data. When `PLAYWRIGHT_BASE_URL` is set, Playwright uses that existing frontend server and does not start its own. Otherwise the default test command owns and starts its local server.
 
-## Latest recorded run
+## Previous backend integration run
 
 On 2026-11-15, `npm test` passed 16 tests, `npm run lint` passed, `npx tsc --noEmit` passed and `npm run build` passed. The mock-backed `npm run test:e2e` run passed 12 scenarios and skipped the one opt-in real-API case. The real-API case passed separately against the production Next.js app and the backend using an isolated local database. The backend `uv run --locked pytest` run passed 37 tests with one upstream Starlette/httpx deprecation warning. See [the API contract](backend-api-contract.md) for the real journey's observed statuses and limits.
+
+## Public-readiness verification
+
+On 2026-11-16, `npm test` passed 25 tests, `npm run lint` passed, `npx tsc --noEmit` passed and `npm run build` passed with a loopback API origin. A separate build with `NEXT_PUBLIC_API_BASE_URL` unset failed with the expected setup error. The mock-backed `npm run test:e2e` run passed 12 scenarios and skipped the opt-in real-API case. This run did not call a backend or use database data. The detailed source and history review is in [the public-readiness audit](PUBLIC-READINESS-AUDIT.md).
 
 Record mock and real-backend outcomes separately. Backend tests are the evidence for concurrent idempotency, payer-only soft deletion, group access and zero-sum invariants. Run `npm run lint`, unit tests, browser tests, typecheck and build for a code change. Read `.agents/skills/test-engineering/SKILL.md` and `.agents/skills/security-review/SKILL.md` for behavior changes.
