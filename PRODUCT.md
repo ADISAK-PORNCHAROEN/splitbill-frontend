@@ -1,6 +1,6 @@
 # SplitBill frontend
 
-Status: feature implementation and local verification are complete on `develop`; GitHub completion is pending the reviewed pull request merge. The PDF time-spent field still needs the owner's estimate before issue #7 and umbrella issue #1 are complete. Current evidence is in README.md, AI_NOTES.md and docs/backend-api-contract.md. Source requirements are Developer-Take-Home-Test.pdf pages 1–4 (user-provided brief) and the owner's grill-with-docs decisions.
+Status: feature implementation and local verification are complete on `develop`; [PR #10](https://github.com/ADISAK-PORNCHAROEN/splitbill-frontend/pull/10) merged to `main` and closed issues #2–#6. Issues #1 and #7 remain open because the PDF's approximate time-spent field still needs the owner's estimate. Current evidence is in README.md, AI_NOTES.md and docs/backend-api-contract.md. Source requirements are Developer-Take-Home-Test.pdf pages 1–4 (user-provided brief) and the owner's grill-with-docs decisions.
 
 ## Purpose and users
 
