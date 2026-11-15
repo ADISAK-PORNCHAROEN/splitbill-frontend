@@ -19,6 +19,8 @@ A responsive Next.js App Router frontend for the SplitBill take-home brief. Memb
 3. Start the backend with its documented local setup and start this app with `npm run dev`.
 4. Open `http://localhost:3000` and choose an identity. The backend must allow this browser origin in `CORS_ORIGINS`.
 
+`NEXT_PUBLIC_API_BASE_URL` is public. Next.js embeds it in the browser bundle at build time, so set it to the intended backend origin before each build. Do not put credentials or secrets in this variable. The app reports an error when the variable is missing or is not an HTTP or HTTPS origin.
+
 The sample identity selector is not authentication. The backend treats `X-User` as a take-home test identity and must enforce group access, expense validation, idempotency, deletion permissions and balance calculations itself. Do not deploy the sample identity selector as authentication.
 
 ## Money and API decisions
