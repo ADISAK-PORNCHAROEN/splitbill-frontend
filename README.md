@@ -1,5 +1,13 @@
 # SplitBill frontend
 
+## Quick start video
+
+Watch the 27-second walkthrough. It uses mock data in the browser and does not connect to production data. Select the preview to open the video.
+
+[![Play the SplitBill quick-start video](docs/media/splitbill-quick-start-poster.png)](docs/media/splitbill-quick-start.webm)
+
+## Project overview
+
 A responsive Next.js App Router frontend for the SplitBill take-home brief. Members can select a user and permitted group, inspect expenses and balances, preview equal or exact shares, add expenses and delete expenses they paid. The selected Clear Together visual design is documented in [DESIGN.md](DESIGN.md), with reference images in [docs/design](docs/design/). The separate `/prototype` page is an unlinked illustrative artifact with sample data.
 
 ## Run locally
@@ -27,6 +35,7 @@ See [docs/backend-api-contract.md](docs/backend-api-contract.md) for response sh
 ```sh
 npm test
 npm run lint
+npx tsc --noEmit
 npm run build
 npx playwright install chromium
 npm run test:e2e
