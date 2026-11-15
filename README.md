@@ -2,11 +2,11 @@
 
 ## Quick start video
 
-Watch the 27-second walkthrough. It uses mock data in the browser and does not connect to production data. Select the preview to open the video.
+Watch the 27-second walkthrough. It uses mock data in the browser and does not connect to production data.
 
-[![Play the SplitBill quick-start video](docs/media/splitbill-quick-start-poster.png)](docs/media/splitbill-quick-start.webm)
+https://github.com/user-attachments/assets/8cd8e5bb-23ca-4225-9a4f-9d04214780ff
 
-[Open the WebM video file](docs/media/splitbill-quick-start.webm).
+[Download the WebM video file](docs/media/splitbill-quick-start.webm).
 
 ## Project overview
 
