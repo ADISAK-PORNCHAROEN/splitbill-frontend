@@ -84,8 +84,25 @@ function httpErrorMessage(status: number): string {
 export class SplitbillApi {
   private readonly baseUrl: string;
 
-  constructor(baseUrl: string) {
-    this.baseUrl = baseUrl.replace(/\/+$/, "");
+  constructor(baseUrl: string | undefined) {
+    const configuredBaseUrl = baseUrl?.trim();
+    if (!configuredBaseUrl) {
+      throw new Error("NEXT_PUBLIC_API_BASE_URL is required. Copy .env.example to .env.local and set the backend API origin.");
+    }
+
+    let apiUrl: URL;
+    try {
+      apiUrl = new URL(configuredBaseUrl);
+    } catch {
+      throw new Error("NEXT_PUBLIC_API_BASE_URL must be an absolute HTTP(S) origin without credentials, path, query, or fragment.");
+    }
+
+    if ((apiUrl.protocol !== "http:" && apiUrl.protocol !== "https:")
+      || apiUrl.username || apiUrl.password || apiUrl.pathname !== "/" || apiUrl.search || apiUrl.hash) {
+      throw new Error("NEXT_PUBLIC_API_BASE_URL must be an absolute HTTP(S) origin without credentials, path, query, or fragment.");
+    }
+
+    this.baseUrl = apiUrl.origin;
   }
 
   private async request<T>(

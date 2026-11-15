@@ -14,7 +14,7 @@ type Operation =
 type GroupContext = { user: string; groupId: number };
 type Notice = { kind: "success" | "error"; message: string; refresh?: GroupContext };
 
-const api = new SplitbillApi(process.env.NEXT_PUBLIC_API_BASE_URL || "http://127.0.0.1:8000");
+const api = new SplitbillApi(process.env.NEXT_PUBLIC_API_BASE_URL);
 
 function message(error: unknown) {
   return error instanceof ApiError ? error.message : "Something went wrong. Please try again.";

@@ -6,7 +6,7 @@ The App Router entry at `src/app/page.tsx` renders the client-driven SplitBill w
 
 1. `src/app/_components/splitbill-screen.tsx` owns selected user/group, query keys, mutation lifecycle, request retries and notices. Tailwind utilities define the responsive page shell and column layout; `src/app/splitbill.css` holds design-specific tokens and component details.
 2. TanStack Query caches by resource, user and group. Request abort signals and selection-scoped keys prevent stale responses from appearing in the active view.
-3. `src/lib/api/splitbill.ts` is the HTTP boundary. It sends `X-User` and `Idempotency-Key`, validates the agreed response shapes and translates network/HTTP/contract failures.
+3. `src/lib/api/splitbill.ts` is the HTTP boundary. Its constructor validates the browser-visible `NEXT_PUBLIC_API_BASE_URL` origin. It sends `X-User` and `Idempotency-Key`, validates the agreed response shapes and translates network/HTTP/contract failures.
 4. `src/lib/splitbill/` uses integer satang and `BigInt` to preview splits exactly. Amounts cross the API boundary as decimal strings.
 5. `src/app/_components/workspace.tsx` composes SplitBill-specific form, balance and expense panels. Global native control primitives remain under `src/components/ui/`.
 6. `src/app/prototype/` is a standalone illustrative design page, not part of the connected expense journey.

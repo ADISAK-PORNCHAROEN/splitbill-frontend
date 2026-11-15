@@ -4,6 +4,32 @@ import { ApiError, SplitbillApi } from "../../src/lib/api/splitbill";
 const api = new SplitbillApi("http://localhost:8000/");
 afterEach(() => vi.unstubAllGlobals());
 
+describe("API origin configuration", () => {
+  it.each([undefined, "", "   "])("fails with setup instructions when the public API origin is missing", (value) => {
+    expect(() => new SplitbillApi(value)).toThrow("NEXT_PUBLIC_API_BASE_URL is required");
+  });
+
+  it.each([
+    "not-a-url",
+    "ftp://api.example.com",
+    "https://user:password@api.example.com",
+    "https://api.example.com/v1",
+    "https://api.example.com?debug=1",
+    "https://api.example.com#section",
+  ])("rejects an invalid API origin without including its value in the error", (value) => {
+    let error: unknown;
+    try {
+      new SplitbillApi(value);
+    } catch (caught) {
+      error = caught;
+    }
+
+    if (!(error instanceof Error)) throw new Error("Expected invalid API origin configuration to fail.");
+    expect(error.message).toContain("NEXT_PUBLIC_API_BASE_URL must be an absolute HTTP(S) origin");
+    expect(error.message).not.toContain(value);
+  });
+});
+
 describe("SplitBill API boundary", () => {
   it("sends the selected identity and exposes parsed group data", async () => {
     const fetcher = vi.fn().mockResolvedValue(new Response(JSON.stringify([{ id: 1, name: "Trip" }])));
