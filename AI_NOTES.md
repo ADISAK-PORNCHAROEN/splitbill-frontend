@@ -23,6 +23,7 @@ For every implementation commit, review the staged diff against the brief and AP
 - `test: verify the real SplitBill journey`: reviewed the opt-in integration harness for loopback-only API access, isolated test-data cleanup and contract assertions; 12 mock browser scenarios, one production-build real-API journey and 37 backend tests passed, with one upstream deprecation warning. README, setup and ticket guidance were checked against the actual run.
 - `test: stabilize the mocked group retry`: a final production-build browser rerun exposed that the fixture assumed two initial requests, which differs from Next development mode. It now holds the mocked outage until the retry action; production-build Playwright passed all 12 mock scenarios, Vitest passed 16 tests, and lint and TypeScript passed.
 - `fix: align responsive layout and submission docs`: applied independent review findings by using Tailwind for responsive structure and correcting stale project guidance. The production build, lint, TypeScript, 16 Vitest tests, 12 mock browser tests and one real-API browser journey passed; the submitter's time estimate remains pending.
+- PR [#10](https://github.com/ADISAK-PORNCHAROEN/splitbill-frontend/pull/10) merged `develop` into `main` with the full incremental commit history and closed issues #2–#6. Issues #1 and #7 remain open pending the owner's approximate time-spent estimate required by the take-home brief.
 
 ## Prompt examples
 
