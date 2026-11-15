@@ -16,7 +16,7 @@ const headers = {
 async function installApi(page: Page, options: { failFirstCreate?: boolean; failRefresh?: boolean; failDeleteRefresh?: boolean; failGroups?: boolean; delayAlice?: boolean; delayGroupsMs?: number; delayCreateMs?: number; emptyGroups?: boolean } = {}) {
   let expenses: Expense[] = [structuredClone(firstExpense)];
   const attempts: CapturedCreate[] = [];
-  let groupFailuresRemaining = options.failGroups ? 2 : 0;
+  let groupsAvailable = !options.failGroups;
   let failNextRefresh = false;
   let nextId = 11;
   async function json(route: Route, data: unknown, status = 200) {
@@ -32,7 +32,7 @@ async function installApi(page: Page, options: { failFirstCreate?: boolean; fail
     }
     if (path === "/groups") {
       if (options.delayGroupsMs) await new Promise((resolve) => setTimeout(resolve, options.delayGroupsMs));
-      if (groupFailuresRemaining > 0) { groupFailuresRemaining -= 1; return json(route, { error: { code: "http_error", message: "Groups are temporarily unavailable." } }, 503); }
+      if (!groupsAvailable) return json(route, { error: { code: "http_error", message: "Groups are temporarily unavailable." } }, 503);
       if (options.emptyGroups) return json(route, []);
       return json(route, user === "alice" ? [{ id: 1, name: "Chiang Mai trip" }] : user === "bob" ? [{ id: 1, name: "Chiang Mai trip" }, { id: 2, name: "Office lunch" }] : user === "dan" ? [{ id: 2, name: "Office lunch" }] : [{ id: 1, name: "Chiang Mai trip" }]);
     }
@@ -64,7 +64,7 @@ async function installApi(page: Page, options: { failFirstCreate?: boolean; fail
     }
     return json(route, { error: { code: "not_found", message: "Not found" } }, 404);
   });
-  return { attempts };
+  return { attempts, allowGroupRetry: () => { groupsAvailable = true; } };
 }
 
 async function openTrip(page: Page) {
@@ -93,9 +93,10 @@ test("shows only the selected user's groups and discards stale group responses",
 });
 
 test("shows a plain-language API error and retries group loading", async ({ page }) => {
-  await installApi(page, { failGroups: true });
+  const mock = await installApi(page, { failGroups: true });
   await page.goto("/");
   await expect(page.getByRole("alert").filter({ hasText: "Groups are temporarily unavailable." })).toBeVisible();
+  mock.allowGroupRetry();
   await page.getByRole("button", { name: "Try again" }).click();
   await expect(page.getByRole("heading", { name: "Chiang Mai trip" })).toBeVisible();
 });
