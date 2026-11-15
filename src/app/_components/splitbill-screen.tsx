@@ -185,7 +185,7 @@ export function SplitbillScreen() {
   return (
     <main className="sb-app">
       <WorkspaceHeader user={user} onUserChange={changeUser} disabled={busy} />
-      <div className="sb-shell">
+      <div className="sb-shell mx-auto max-w-[1200px] px-8 pb-[100px] pt-[38px] max-[800px]:px-[18px] max-[800px]:pb-[70px] max-[800px]:pt-[30px]">
         {operation.kind === "uncertain" && (
           <div className="sb-error" role="alert">
             <p>We could not confirm whether the expense was saved for {operation.attempt.groupName} as {operation.attempt.user}. Check the list before making a new expense to avoid a duplicate.</p>
@@ -204,12 +204,12 @@ export function SplitbillScreen() {
             {group.isPending ? <p role="status">Loading group…</p> : group.isError ? <div className="sb-error" role="alert"><p>{message(group.error)}</p><button type="button" onClick={() => void group.refetch()}>Try again</button></div> : group.data && (
               <>
                 <GroupHeading group={group.data} />
-                <div className="sb-layout">
-                  <div className="sb-left">
+                <div className="sb-layout grid grid-cols-[minmax(0,1fr)_390px] items-start gap-6 max-[800px]:grid-cols-1">
+                  <div className="sb-left grid gap-5">
                     {balances.isPending ? <p role="status">Loading balances…</p> : balances.isError ? <div className="sb-error" role="alert"><p>{message(balances.error)}</p><button type="button" onClick={() => void balances.refetch()}>Try again</button></div> : <BalancePanel balances={balances.data ?? []} user={user} />}
                     {expenses.isPending ? <p role="status">Loading expenses…</p> : expenses.isError ? <div className="sb-error" role="alert"><p>{message(expenses.error)}</p><button type="button" onClick={() => void expenses.refetch()}>Try again</button></div> : <ExpensesPanel expenses={expenses.data ?? []} user={user} onDelete={(expense) => void deleteExpense(expense)} disabled={busy} />}
                   </div>
-                  <ExpenseForm key={`${user}-${groupId}-${formVersion}`} user={user} members={group.data.members} busy={busy} onDirtyChange={(value) => { if (value) formRevision.current += 1; setDirty(value); }} onSubmit={createExpense} />
+                  <div className="max-[800px]:row-start-1"><ExpenseForm key={`${user}-${groupId}-${formVersion}`} user={user} members={group.data.members} busy={busy} onDirtyChange={(value) => { if (value) formRevision.current += 1; setDirty(value); }} onSubmit={createExpense} /></div>
                 </div>
               </>
             )}

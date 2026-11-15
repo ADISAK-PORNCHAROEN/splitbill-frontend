@@ -17,8 +17,8 @@ function Avatar({ name, index = 0 }: { name: string; index?: number }) {
 
 export function WorkspaceHeader({ user, onUserChange, disabled }: { user: string; onUserChange: (user: string) => void; disabled: boolean }) {
   return (
-    <header className="sb-header">
-      <div className="sb-header-inner">
+    <header className="sb-header h-[73px] border-b border-[#eeedef] bg-white">
+      <div className="sb-header-inner mx-auto flex h-full max-w-[1200px] items-center justify-between px-8 max-[800px]:px-5">
         <div className="sb-brand"><span className="sb-logo" aria-hidden="true">s</span><span>splitbill<span className="sb-brand-dot">.</span></span></div>
         <label className="sb-user"><span>Viewing as</span><Avatar name={user || "?"} /><select aria-label="Select user" value={user} onChange={(event) => onUserChange(event.target.value)} disabled={disabled}>
           {!user && <option value="">Select user</option>}

@@ -54,7 +54,7 @@ Provide one usable, responsive English-language page with a warm, friendly visua
 
 ## Implementation Decisions
 
-- Use a single Next.js page with TypeScript and Tailwind. Preserve all required behavior while applying a warm and friendly design.
+- Use a single Next.js page with TypeScript and Tailwind for the page shell and responsive layout; retain the selected component-specific design details in `src/app/splitbill.css`. Preserve all required behavior while applying a warm and friendly design.
 - The backend is authoritative for membership, authorization, amount validation, allocation, balances, idempotency and soft deletion. Frontend checks improve feedback but do not enforce access.
 - Follow [the backend API contract](backend-api-contract.md) for agreed paths, headers, responses and deletion behavior. The current backend handoff confirms response shapes, error codes and local CORS defaults. Configure the API origin and verify the running backend before claiming integration.
 - Represent money without floating-point arithmetic. Send decimal strings and document the chosen approach. Reject an expense amount of zero or less or more than two decimal places.

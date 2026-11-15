@@ -1,6 +1,6 @@
 # SplitBill Frontend Agent Guide
 
-Next.js App Router frontend for the SplitBill take-home brief; the present page is a scaffold.
+Next.js App Router frontend for the SplitBill take-home brief; the home page implements group selection, exact-money expense flows, balances and payer deletion against the backend API contract.
 
 <!-- BEGIN:nextjs-agent-rules -->
 

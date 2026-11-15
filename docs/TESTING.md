@@ -17,7 +17,7 @@ The mock-backed Playwright suite covers per-user groups, delayed stale responses
 
 ## Real backend integration
 
-An opt-in `tests/e2e/real-api.spec.ts` drives the browser against the current local backend contract. It needs seeded users `alice`, `bob`, `carol` and group 1; a backend configured to allow the app origin; and a dedicated local test database. The spec creates two uniquely named expenses, validates the equal and exact shares returned by the API, replays the same key/payload, checks a zero-sum balance, verifies that Bob cannot delete Alice's expense, checks the backend's actual `403`, `404` and `400` behavior, deletes the test expenses and checks refreshed UI data.
+An opt-in `tests/e2e/real-api.spec.ts` drives the browser against the current local backend contract. It needs seeded users `alice`, `bob`, `carol` and group 1; a backend configured to allow the app origin; and a dedicated local test database. The spec creates two uniquely named expenses, validates the equal and exact shares returned by the API, replays the same key/payload, checks a zero-sum balance, verifies that Bob cannot delete Alice's expense, deletes the test expenses and checks refreshed UI data. Its `403`, `404` and `400` status probes use Playwright's direct API request client because the UI correctly hides or blocks those requests. Mock-backed browser tests cover the user-visible error messages; they do not prove backend response behavior.
 
 Start a local frontend and backend using their normal development commands. Then set:
 

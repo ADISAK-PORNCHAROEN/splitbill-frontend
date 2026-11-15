@@ -22,3 +22,15 @@ For every implementation commit, review the staged diff against the brief and AP
 - `feat: implement connected SplitBill workspace`: reviewed the API boundary, query/mutation state, forms, design references and retained prototype for contract alignment and scope; lint and TypeScript passed, all 16 unit tests and 12 mock browser scenarios passed, and desktop/mobile behavior was inspected against the owner-selected reference.
 - `test: verify the real SplitBill journey`: reviewed the opt-in integration harness for loopback-only API access, isolated test-data cleanup and contract assertions; 12 mock browser scenarios, one production-build real-API journey and 37 backend tests passed, with one upstream deprecation warning. README, setup and ticket guidance were checked against the actual run.
 - `test: stabilize the mocked group retry`: a final production-build browser rerun exposed that the fixture assumed two initial requests, which differs from Next development mode. It now holds the mocked outage until the retry action; production-build Playwright passed all 12 mock scenarios, Vitest passed 16 tests, and lint and TypeScript passed.
+- `fix: align responsive layout and submission docs`: applied independent review findings by using Tailwind for responsive structure and correcting stale project guidance. The production build, lint, TypeScript, 16 Vitest tests, 12 mock browser tests and one real-API browser journey passed; the submitter's time estimate remains pending.
+
+## Prompt examples
+
+1. The owner asked to implement every open frontend issue against the approved PDF requirements while preserving the selected design and existing working-tree changes. That prompt named the source of truth, scope and preservation constraints.
+2. The owner required a real-backend journey when the endpoints were ready, separate reporting for mock and backend evidence, and no issue closure before its acceptance criteria passed. That prompt made backend claims and issue status depend on observable results.
+
+## Incorrect AI output and correction
+
+An early mock browser fixture assumed Next.js would send two group-list requests before showing an API error. The production-build browser run made only one request before the user's retry, so the fixture returned the same error again and the test failed. The test exposed the mistaken assumption. The fixture now holds the outage until the test explicitly permits the user retry, and the production-build browser suite passes.
+
+An independent review also found the implementation guide still called the page a scaffold and required Tailwind. The responsive app shell and grid now use Tailwind utilities, and the guide reflects the connected page. Design-specific component rules stay in the scoped stylesheet.

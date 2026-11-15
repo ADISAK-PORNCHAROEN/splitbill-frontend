@@ -41,3 +41,9 @@ npm run test:e2e -- tests/e2e/real-api.spec.ts
 The real-API spec accepts only `localhost` or `127.0.0.1` API origins. It creates uniquely named expenses in seeded group 1, checks reads, balances, exact/equal splits, replay, invalid requests and payer permissions, then deletes only expense IDs returned from those creates. Run it only against a dedicated local test database, never a shared, staging or production dataset. Mocks verify frontend behavior at the API boundary; they do not prove backend authorization or persistence. Backend tests separately verify group authorization, zero-sum balances, payer-only soft deletion and concurrent idempotency.
 
 Detailed test scope and setup notes live in [docs/TESTING.md](docs/TESTING.md). Project architecture is in [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md). AI-assisted work and review records are in [AI_NOTES.md](AI_NOTES.md).
+
+## Take-home submission notes
+
+- Approximate time spent: owner estimate pending. The repository and automated run logs do not measure the submitter's active work time.
+- Known limitations: the identity selector demonstrates the take-home `X-User` contract and is not authentication; the API origin must be configured for each environment; deployment was not tested.
+- Before submission, the owner should record the time estimate. For a deployed app, configure a real API origin and authentication, then run the integration flow against its dedicated environment.
