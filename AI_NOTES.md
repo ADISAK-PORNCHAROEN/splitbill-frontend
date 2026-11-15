@@ -19,3 +19,4 @@ For every implementation commit, review the staged diff against the brief and AP
 ## Review log
 
 - `feat(money): add exact satang allocation`: reviewed the staged domain parser, formatter, allocator and boundary tests against positive range, precision, ordered remainder and exact-share rules; `npm test` passed 16 tests and `npx tsc --noEmit` passed.
+- `feat: implement connected SplitBill workspace`: reviewed the API boundary, query/mutation state, forms, design references and retained prototype for contract alignment and scope; lint and TypeScript passed, all 16 unit tests and 12 mock browser scenarios passed, and desktop/mobile behavior was inspected against the owner-selected reference.
